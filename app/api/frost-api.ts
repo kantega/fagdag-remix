@@ -30,3 +30,10 @@ export async function getWeatherByCityId(cityId: string) {
     const period = `${yearAgo.toISOString().substring(0,10)}/${today.toISOString().substring(0,10)}`;
     return fetch(`https://frost.met.no/observations/v0.jsonld?sources=${cityId}&referencetime=${period}&elements=max(air_temperature%20P1M)`, {headers: getAuthHeaders()})
 }
+
+export async function getWeatherByCityIdAndYear(cityId: string, year: number) {
+    const startOfYear = new Date(year, 0, 1);
+    const endOfYear = new Date(year, 11, 31);
+    const period = `${startOfYear.toISOString().substring(0,10)}/${endOfYear.toISOString().substring(0,10)}`;
+    return fetch(`https://frost.met.no/observations/v0.jsonld?sources=${cityId}&referencetime=${period}&elements=max(air_temperature%20P1M)`, {headers: getAuthHeaders()})
+}

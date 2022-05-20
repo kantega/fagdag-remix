@@ -1,13 +1,17 @@
 import { json } from "@remix-run/node";
 import {Link, useLoaderData} from "@remix-run/react";
-import { getWeatherByCityId } from "~/api/frost-api";
+import { getWeatherByCityIdAndYear } from "~/api/frost-api";
 import {bergen, getCityById, City, oslo, trondheim} from "~/constants";
 import CityTemperatureTable from "../components/city-temperature-table";
 
 
-export const loader = async ({params} : {params:any}) => {
+export const loader = async ({params, request} : {params:any, request: any}) => {
+    const url = new URL(request.url);
+    let yearString = url.searchParams.get('year')
+    const year = yearString != null ? Number(yearString) : new Date().getFullYear();
+
     const compareCity = getCityById(params.compareId);
-    const observationsCompare = await getWeatherByCityId(params.compareId);
+    const observationsCompare = await getWeatherByCityIdAndYear(params.compareId, year);
     const data = { city: compareCity, observations: await observationsCompare.json()};
     return json(data);
   };
