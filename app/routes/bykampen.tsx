@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, useLoaderData} from "@remix-run/react";
+import {Form, Link, Outlet, useLoaderData} from "@remix-run/react";
 import {getCityById } from "~/constants";
 import {FrostObservationsResponse, getWeatherOnDate} from '~/api/frost-api';
 
@@ -14,8 +14,6 @@ export const loader = async ({request}: {request: Request}) => {
 
 function Bykampen() {
   const response = useLoaderData() as FrostObservationsResponse;
-  console.log(response);
-  console.log(response.data.map(item => item.observations))
   return (
     <div>
       <h1>
@@ -30,7 +28,8 @@ function Bykampen() {
         </select>
         <input type="submit" value="Vis"/>
       </Form>
-      {response && response.data.map(station => <p>{getCityById(station.sourceId)?.name}: {station.observations[0].value ?? "ingen måling"}</p>)}
+      {response && response.data.map(station => <Link to={getCityById(station.sourceId)?.id || ''}>{getCityById(station.sourceId)?.name}: {station.observations[0].value ?? "ingen måling"}</Link>)}
+      <Outlet/>
     </div>
   );
 }

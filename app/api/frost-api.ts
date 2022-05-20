@@ -22,3 +22,19 @@ export interface StationWithObservations {
 export async function getWeatherOnDate(date : string, elements: string = "max(air_temperature%20P1D)") {
     return fetch(`https://frost.met.no/observations/v0.jsonld?sources=${oslo.id},${bergen.id},${trondheim.id}&referencetime=${date}&elements=${elements}`, {headers: getAuthHeaders()})
 }
+
+export interface SourceInformation {
+  data: Station[]
+}
+
+export interface Station {
+      shortName: string,
+      geometry: {
+        coordinates: number[],
+      },
+      validFrom: string,
+    }
+
+export async function getStationById(sourceId : string) {
+    return fetch(`https://frost.met.no/sources/v0.jsonld?ids=${sourceId}`, {headers: getAuthHeaders()})
+}
