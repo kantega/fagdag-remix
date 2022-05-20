@@ -15,6 +15,6 @@ export const bergen = {
 
 export const cities = [oslo, bergen, trondheim]
 
-export function getCiyById(id: string) {
+export function getCityById(id: string) {
   return cities.find(city => city.id === id);
 }
