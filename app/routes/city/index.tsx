@@ -1,26 +1,26 @@
 import {Link} from "@remix-run/react";
+import {bergen, oslo, trondheim} from "~/constants";
 
-export default function Index() {
+export default function CityIndex() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Weather by Kantega</h1>
+      <h1>Velg by</h1>
       <ul>
         <li>
-          <Link to="/records">
-            Værrekorder
+          <Link to={bergen.id}>
+            Bergen
           </Link>
         </li>
         <li>
-          <Link to="/bykampen">
-            Bykampen
+          <Link to={oslo.id}>
+            Oslo
           </Link>
         </li>
         <li>
-          <Link to="/city">
-            Sjekk været i din by
+          <Link to={trondheim.id}>
+            Trondheim
           </Link>
         </li>
-
       </ul>
     </div>
   );

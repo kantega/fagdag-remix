@@ -22,3 +22,11 @@ export interface StationWithObservations {
 export async function getWeatherOnDate(date : string) {
     return fetch(`https://frost.met.no/observations/v0.jsonld?sources=${oslo.id},${bergen.id},${trondheim.id}&referencetime=${date}&elements=max(air_temperature%20P1D)`, {headers: getAuthHeaders()})
 }
+
+export async function getWeatherByCityId(cityId: string) {
+    const today = new Date();
+    const yearAgo = new Date();
+    yearAgo.setFullYear(today.getFullYear() - 1)
+    const period = `${yearAgo.toISOString().substring(0,10)}/${today.toISOString().substring(0,10)}`;
+    return fetch(`https://frost.met.no/observations/v0.jsonld?sources=${cityId}&referencetime=${period}&elements=max(air_temperature%20P1M)`, {headers: getAuthHeaders()})
+}
